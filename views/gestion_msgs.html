@@ -1,0 +1,190 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset= utf-8" />
+<meta name="viewport" content="user-scalable=no" />
+<link rel="stylesheet" href="../styles/style.css" />
+<script type="text/javascript"
+	src="http://code.jquery.com/jquery.min.js"></script>
+<script
+	src="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
+<title>Gestion des messages d'utilisateurs</title>
+</head>
+
+<body>
+
+	<!-- barre de navigation supérieure fixe -->
+
+	<div class="navbar">
+		<nav id="myNavbar" class="navbar navbar-default navbar-fixed-top"
+			role="navigation">
+			<div class="container">
+				<div class="navbar-header">
+					<button type="button" class="navbar-toggle" data-toggle="collapse"
+						data-target=".navbar-collapse">
+						<span class="sr-only">Toggle navigation</span> <span
+							class="icon-bar"></span> <span class="icon-bar"></span> <span
+							class="icon-bar"></span>
+					</button>
+					<a class="navbar-brand" href="/">AppCity</a>
+				</div>
+				<div class="navbar-collapse collapse">
+					<ul class="nav navbar-nav">
+						<li><a href="/">Accueil </a></li>
+						<li class="dropdown">
+						<a href="#" data-toggle="dropdown" class="dropdown-toggle">Soumissions <b class="caret"></b></a>
+							<ul class="dropdown-menu">
+								<li><a href="/soumissions">Toutes les soumissions</a></li>
+								<li><a href="/soumission_prob">Soumettre un problème</a></li>
+							</ul></li> 
+						{{#loginStatusIn}}
+						<li><a href="/espace_perso">Espace perso </a></li>
+						{{/loginStatusIn}}
+
+						<li><a href="/contact">Contact</a></li>
+						<li><a href="/aide">Aide</a></li> 
+						{{#adminSection}}
+						<li class="dropdown">
+						<a href="#" data-toggle="dropdown" class="dropdown-toggle">Administration <b class="caret"></b></a>
+							<ul class="dropdown-menu">
+								<li><a href="/admin">Espace administrateurs</a></li>
+								<li><a href="gestion_probs">Gestion des problèmes</a></li>
+								<li><a href="/gestion_cat_probs">Gestion des catégories de problèmes</a></li>
+								<li><a href="gestion_users">Gestion des utilisateurs</a></li>
+								<li><a href="/gestion_blog">Gestion des news</a></li>
+								<li><a href="/gestion_msgs">Messages d'utilisateurs</a></li>
+							</ul></li> 
+						{{/adminSection}}
+					</ul>
+					{{#loginStatusOut}}
+					<form class="navbar-form navbar-right" method="post"
+						action="/login">
+						<input type="text" class="form-control" name="username"
+							placeholder="Login"> <input type="password"
+							class="form-control" name="password" placeholder="Password">
+						<button type="submit" class="btn btn-primary btn-xs">Connection</button>
+						<a href="/inscription"><button type="button"
+								class="btn btn-primary btn-xs">S'inscrire</button></a>
+						<a href="/aide"><button type="button"
+								class="btn btn-primary btn-xs">Mot de passe oublié ?</button></a>
+					</form>
+					{{/loginStatusOut}} {{#loginStatusIn}}
+					<form class="navbar-form navbar-right" method="post"
+						action="/logout">
+						<p>Bonjour, {{userName}}</p>
+						<button type="submit" class="btn btn-primary btn-xs">Déconnection</button>
+					</form>
+					{{/loginStatusIn}}
+				</div>
+			</div>
+		</nav>
+	</div>
+
+
+	<div class="container">
+
+		<!-- En cas d'échec ou de réussite de connexion, on affiche un message :  -->
+		{{#loginMsg}}<div class="well">{{loginMsg}}</div>{{/loginMsg}}
+		<!-- titre principal -->
+
+		<div class="page-header" id="banner">
+			<div class="row">
+
+				<div class="col-lg-12">
+					<h1>Welcome back, Commander</h1>
+				</div>
+
+			</div>
+		</div>
+
+		<div class="bs-doc-section clearfix">
+
+
+			<!-- Formulaire new post -->
+
+			<div class="col-lg-7">
+				<div class="well bs-component">
+					<form class="form-horizontal" method="post" action="/replyMsg?idMsg={{msg._id}}">
+							<div class="form-group">
+								<label class="col-lg-3 control-label">Utilisateur :</label>
+									<div class="col-lg-9">
+										<p style="padding-top: 9px;">{{msg.idUser}}</p>
+									</div>
+							</div>
+							<div class="form-group">
+								<label class="col-lg-3 control-label">Adresse mail :</label>
+									<div class="col-lg-9">
+										<p style="padding-top: 9px;">{{submitter.mail}}</p>
+									</div>
+							</div>
+							<div class="form-group">
+								<label class="col-lg-3 control-label">Sujet :</label>
+									<div class="col-lg-9">
+										<p style="padding-top: 9px;">{{msg.subjectMsg}}</p>
+									</div>
+							</div>
+							<div class="form-group">
+								<label for="textArea" class="col-lg-3 control-label">Message :</label>
+									<div class="col-lg-9">
+										<p style="padding-top: 9px;">{{msg.contentMsg}}</p>
+									</div>
+							</div>
+							<div class="form-group">
+								<label for="textArea" class="col-lg-3 control-label">Réponse :</label>
+									<div class="col-lg-9">
+										<textarea type="text" class="form-control" style="padding-top: 9px;" rows="7" id="textArea" name="response" value="{{response}}"></textarea>
+									</div>
+							</div>
+							
+							<div class="form-group" style="margin-top: 25px;">
+								<div class="col-lg-8 col-lg-offset-5">
+									<button type="submit" class="btn btn-primary" style="padding-left: 50px; padding-right: 50px; margin-bottom:35px; margin-left: -40px;">Répondre</button>
+								</div>
+							</div>
+						</div>
+					</form>	
+			
+			</div>
+			
+			<div class="col-lg-5">
+				<div class="well bs-component" style="text-align: justify; font-size: 0.9em;">
+					<p>Pour répondre à l'un des messages, veuillez cliquer sur le bouton "Afficher" afin qu'il apparaisse dans l'encadré à gauche de l'écran, puis taper et expédier votre réponse.</p>
+				</div>
+			</div>
+
+			<!-- Derniers messages -->
+
+			<div class="col-lg-5">
+				<div class="well bs-component">
+					<h2>Derniers messages</h2>
+					<table class="table table-striped table-hover " style="font-size: 1em;">
+						<thead>
+							<tr>
+								<th>Date</th>
+								<th>Sujet</th>
+								<th>Auteur</th>
+								<th>Afficher</th>
+							</tr>
+						</thead>
+						{{#messages}}
+						<tbody>
+							<tr class="active">
+								<td>{{date}}</td>
+								<td>{{subjectMsg}}</td>
+								<td>{{idUser}}</td>
+								<td>
+									<form method="post" action="/selectMsg?idMsg={{_id}}">
+										<button type="submit" class="btn btn-primary btn-xs">Afficher</button>
+									</form>
+								</td>
+							</tr>
+						</tbody>
+						{{/messages}}
+					</table>
+				</div>
+			</div>
+
+		</div>
+
+</body>
+
+</html>

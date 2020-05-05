@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset= utf-8" />
+<meta name="viewport" content="user-scalable=no" />
+<link rel="stylesheet" href="../styles/style.css" />
+<script type="text/javascript"
+	src="http://code.jquery.com/jquery.min.js"></script>
+<script
+	src="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
+<title>Nouvelle soumission</title>
+
+<!-- Inclusion de l'API Google MAPS -->
+<!-- Le paramètre "sensor" indique si cette application utilise détecteur pour déterminer la position de l'utilisateur -->
+<script type="text/javascript"
+	src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBCGQ9e_E3Rz0XZLGWeqbgO6Z3mb0Cz_mg&sensor=false">
+    </script>
+
+</head>
+
+<body>
+
+	<!-- barre de navigation supérieure fixe -->
+
+	<div class="navbar">
+		<nav id="myNavbar" class="navbar navbar-default navbar-fixed-top"
+			role="navigation">
+			<div class="container">
+				<div class="navbar-header">
+					<button type="button" class="navbar-toggle" data-toggle="collapse"
+						data-target=".navbar-collapse">
+						<span class="sr-only">Toggle navigation</span> <span
+							class="icon-bar"></span> <span class="icon-bar"></span> <span
+							class="icon-bar"></span>
+					</button>
+					<a class="navbar-brand" href="/">AppCity</a>
+				</div>
+				<div class="navbar-collapse collapse">
+					<ul class="nav navbar-nav">
+						<li><a href="/">Accueil </a></li>
+						<li class="dropdown"><a href="#" data-toggle="dropdown"
+							class="dropdown-toggle">Soumissions <b class="caret"></b></a>
+							<ul class="dropdown-menu">
+								<li><a href="/soumissions">Toutes les soumissions</a></li>
+								<li><a href="/soumission_prob">Soumettre un problème</a></li>
+							</ul></li> {{#loginStatusIn}}
+						<li><a href="/espace_perso">Espace perso </a></li>{{/loginStatusIn}}
+
+						<li><a href="/contact">Contact</a></li>
+						<li><a href="/aide">Aide</a></li> {{#adminSection}}
+						<li class="dropdown"><a href="#" data-toggle="dropdown"
+							class="dropdown-toggle">Administration <b class="caret"></b></a>
+							<ul class="dropdown-menu">
+								<li><a href="/admin">Espace administrateurs</a></li>
+								<li><a href="/gestion_probs">Gestion des problèmes</a></li>
+								<li><a href="/gestion_cat_probs">Gestion des catégories
+										de problèmes</a></li>
+								<li><a href="/gestion_users">Gestion des utilisateurs</a></li>
+								<li><a href="/gestion_blog">Gestion des news</a></li>
+								<li><a href="/gestion_msgs">Messages d'utilisateurs</a></li>
+							</ul></li> {{/adminSection}}
+					</ul>
+					{{#loginStatusOut}}
+					<form class="navbar-form navbar-right" method="post"
+						action="/login">
+						<input type="text" class="form-control" name="username"
+							placeholder="Login"> <input type="password"
+							class="form-control" name="password" placeholder="Password">
+						<button type="submit" class="btn btn-primary btn-xs">Connection</button>
+						<a href="/inscription"><button type="button"
+								class="btn btn-primary btn-xs">S'inscrire</button></a> <a
+							href="/aide"><button type="button"
+								class="btn btn-primary btn-xs">Mot de passe oublié ?</button></a>
+					</form>
+					{{/loginStatusOut}} {{#loginStatusIn}}
+					<form class="navbar-form navbar-right" method="post"
+						action="/logout">
+						<p>Bonjour, {{userName}}</p>
+						<button type="submit" class="btn btn-primary btn-xs">Déconnection</button>
+					</form>
+					{{/loginStatusIn}}
+				</div>
+			</div>
+		</nav>
+	</div>
+
+	<div class="container">
+
+		<!-- En cas d'échec ou de réussite de connexion, on affiche un message :  -->
+		{{#loginMsg}}
+		<div class="well">{{loginMsg}}</div>
+		{{/loginMsg}}
+
+		<!-- Titre principal -->
+
+		<div class="page-header" id="banner">
+			<div class="row">
+
+				<div class="col-lg-12">
+					<h1>Soumettre un nouveau problème</h1>
+				</div>
+
+			</div>
+		</div>
+
+		<!-- Encadré texte d'introduction -->
+
+		<div class="bs-doc-section clearfix">
+
+			<div class="col-lg-12">
+				<div class="well bs-component">
+
+					<p class="text-primary" style="text-align: center;">Vous avez
+						remarqué une dégradation de l'espace public, un déchet entravant
+						la circulation ou tout autre problème au sein de notre commune ?</p>
+					<p class="text-primary"
+						style="text-align: center; font-weight: bold;">N'hésitez pas à
+						nous en faire part ici !</p>
+
+				</div>
+			</div>
+
+			<!-- formulaire -->
+
+			<div class="col-lg-12">
+
+				<form class="form-horizontal" method="post" enctype="multipart/form-data">
+
+					<!-- Catégorie du problème -->
+
+					<div class="well bs-component">
+						<legend>Quel est le type du problème remarqué ?</legend>
+						<!-- début des cases à cocher -->
+
+						{{#sections}}
+
+						<div class="col-lg-3" style="margin-bottom: 40px">
+							{{#0}}
+
+							<div class="checkbox">
+								<label> <input type="checkbox" name="type"
+									value="{{_id}}"> {{_id}}
+								</label>
+							</div>
+
+							{{/0}}
+						</div>
+
+
+						<div class="col-lg-3" style="margin-bottom: 40px">
+							{{#1}}
+
+							<div class="checkbox">
+								<label> <input type="checkbox" name="type"
+									value="{{_id}}"> {{_id}}
+								</label>
+							</div>
+
+							{{/1}}
+						</div>
+
+
+						<div class="col-lg-3" style="margin-bottom: 40px">
+							{{#2}}
+
+							<div class="checkbox">
+								<label> <input type="checkbox" name="type"
+									value="{{_id}}"> {{_id}}
+								</label>
+							</div>
+
+							{{/2}}
+						</div>
+
+
+						<div class="col-lg-3" style="margin-bottom: 40px">
+							{{#3}}
+
+							<div class="checkbox">
+								<label> <input type="checkbox" name="type"
+									value="{{_id}}"> {{_id}}
+								</label>
+							</div>
+
+							{{/3}}
+						</div>
+
+						{{/sections}}
+
+						<div class="col-lg-12">
+							<p class="pull-right" style="font-size: 12px">* = veuillez
+								préciser dans le cadre prévu à cet effet</p>
+						</div>
+
+						<div class="form-group">
+							<label for="textArea" class="col-lg-2 control-label">Remarques
+								: </label>
+							<div class="col-lg-10">
+								<textarea type="text" class="form-control" rows="3"
+									id="textArea" name="remarques" value="{{remarques}}"></textarea>
+								<span class="help-block" style="font-size: 12px">Si le
+									problème à signaler n'entre pas dans les catégories proposées
+									ci-dessus, n'hésitez pas à le décrire dans ce cadre également !</span>
+							</div>
+						</div>
+					</div>
+					<!--  fin de ces cases et des remarques -->
+
+					<!--  Ajout d'une image -->
+					<div class="well bs-component">
+						<legend>Avez-vous une photo du problème ?</legend>
+
+						<div class="col-lg-10" style="margin-bottom: 20px">
+							<p style="font-size: 13px">Cliquez sur le bouton "parcourir..." ci-dessous afin de nous télécharger cette photo</p>
+						</div>
+
+						<div class="form-group">
+							<div class="col-lg-8">
+								<input type="file" name="picture">
+							</div>
+						</div>
+					</div>
+
+					<!-- situation du problème -->
+					<div class="well bs-component">
+						<legend>Où se situe le problème remarqué ?</legend>
+
+						<div class="col-lg-10" style="margin-bottom: 20px">
+							<p style="font-size: 13px">Entrez l'adresse du problème
+								remarqué dans le formulaire ci-dessous, ou placez un pointeur
+								sur l'endroit concerné dans la carte Google Maps, au choix !</p>
+						</div>
+
+
+						<div class="col-lg-6">
+							<div class="form-group">
+								<label class="col-lg-2 control-label">Rue</label>
+								<div class="col-lg-8">
+									<input type="text" class="form-control" name="street"
+										value="{{street}}">
+								</div>
+							</div>
+
+							<div class="form-group">
+								<label class="col-lg-2 control-label">Numéro</label>
+								<div class="col-lg-2">
+									<input type="text" class="form-control" name="num"
+										value="{{num}}">
+								</div>
+
+
+								<label class="col-lg-3 control-label">Code postal</label>
+								<div class="col-lg-3">
+									<input type="text" class="form-control" name="postcode"
+										value="{{postcode}}">
+								</div>
+							</div>
+
+							<div class="form-group">
+								<label class="col-lg-2 control-label">Localité</label>
+								<div class="col-lg-8">
+									<input type="text" class="form-control" name="city"
+										value="{{city}}">
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-lg-2 control-label">Latitude</label>
+								<div class="col-lg-8">
+									<input id="latitude" type="text" class="form-control"
+										name="latitude" value="{{latitude}}">
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-lg-2 control-label">Longitude</label>
+								<div class="col-lg-8">
+									<input id="longitude" type="text" class="form-control"
+										name="longitude" value="{{longitude}}">
+								</div>
+							</div>
+
+						</div>
+
+						<div class="col-lg-6">
+							<div class="jumbotron" style="clear: both">
+								<div id="map-canvas" style="width: 420px; height: 550px;"></div>
+							</div>
+
+						</div>
+						<div class="form-group">
+							<div class="col-lg-10 col-lg-offset-5">
+								<button type="reset" class="btn btn-default"
+									style="margin-right: 20px">Annuler</button>
+								<button type="submit" class="btn btn-primary">Soumettre</button>
+							</div>
+						</div>
+					</div>
+				</form>
+			</div>
+
+			<script type="text/javascript" src="map.js"></script>
+</body>
+
+</html>

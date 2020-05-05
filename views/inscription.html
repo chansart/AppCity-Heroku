@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="fr">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset= utf-8" />
+<link rel="stylesheet" href="../styles/style.css" />
+<script type="text/javascript"
+	src="http://code.jquery.com/jquery.min.js"></script>
+<script
+	src="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
+<title>Inscription</title>
+
+</head>
+
+<body>
+
+	<!-- barre de navigation supérieure fixe -->
+
+	<div class="navbar">
+		<nav id="myNavbar" class="navbar navbar-default navbar-fixed-top" role="navigation">
+			<div class="container">
+				<div class="navbar-header">
+					<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="/">AppCity</a>
+				</div>
+				<div class="navbar-collapse collapse">
+					<ul class="nav navbar-nav">
+						<li><a href="/">Accueil </a></li>
+						<li class="dropdown">
+							<a href="#" data-toggle="dropdown" class="dropdown-toggle">Soumissions <b class="caret"></b></a>
+							<ul class="dropdown-menu">
+								<li><a href="/soumissions">Toutes les soumissions</a></li>
+								<li><a href="/soumission_prob">Soumettre un problème</a></li>
+							</ul>
+						</li>
+						
+						{{#loginStatusIn}}<li><a href="/espace_perso">Espace perso </a></li>{{/loginStatusIn}}
+						
+						<li><a href="/contact">Contact</a></li>
+						<li><a href="/aide">Aide</a></li>
+						{{#adminSection}}
+						<li class="dropdown">
+						<a href="#" data-toggle="dropdown" class="dropdown-toggle">Administration <b class="caret"></b></a>
+							<ul class="dropdown-menu">
+								<li><a href="/admin">Espace administrateurs</a></li>
+								<li><a href="/gestion_probs">Gestion des problèmes</a></li>
+								<li><a href="/gestion_cat_probs">Gestion des catégories de problèmes</a></li>
+								<li><a href="/gestion_users">Gestion des utilisateurs</a></li>
+								<li><a href="/gestion_blog">Gestion des news</a></li>
+								<li><a href="/gestion_msgs">Messages d'utilisateurs</a></li>
+							</ul></li> 
+						{{/adminSection}}
+					</ul>
+					{{#loginStatusOut}}
+					<form class="navbar-form navbar-right" method="post" action ="/login">
+						<input type="text" class="form-control" name="username"
+							placeholder="Login"> <input type="password"
+							class="form-control" name="password" placeholder="Password">
+						<button type="submit" class="btn btn-primary btn-xs">Connection</button>
+						<a href="/inscription"><button type="button"
+								class="btn btn-primary btn-xs">S'inscrire</button></a>
+						<a href="/aide"><button type="button"
+								class="btn btn-primary btn-xs">Mot de passe oublié ?</button></a>
+					</form>
+					{{/loginStatusOut}}
+					{{#loginStatusIn}}
+					<form class="navbar-form navbar-right" method="post" action ="/logout">
+						<p>Bonjour, {{userName}}</p>
+						<button type="submit" class="btn btn-primary btn-xs">Déconnection</button>
+					</form>
+					{{/loginStatusIn}}
+				</div>
+			</div>
+		</nav>
+	</div>
+
+	<div class="container">
+	
+		<!-- En cas d'échec ou de réussite de connexion, on affiche un message :  -->
+		{{#loginMsg}}
+		<div class="well">{{loginMsg}}</div>
+		{{/loginMsg}}
+
+		<!-- Titre principal -->
+
+		<div class="page-header" id="banner">
+			<div class="row">
+
+				<div class="col-lg-12">
+					<h1>Vous inscrire</h1>
+				</div>
+
+			</div>
+		</div>
+
+		<!-- Encadré texte d'introduction -->
+
+		<div class="bs-doc-section clearfix">
+
+			<div class="col-lg-12">
+				<div class="well bs-component">
+
+					<p class="text-primary" style="text-align: center;">Vous
+						souhaitez contribuer à l'entretien des espaces publics de votre
+						commune ?</p>
+					<p class="text-primary"
+						style="text-align: center; font-weight: bold;">Inscrivez-vous
+						ici, afin de pouvoir signaler les améliorations possibles que vous
+						remarquez !</p>
+
+				</div>
+			</div>
+		</div>
+
+		<!-- formulaire -->
+
+		<!-- Votre identité -->
+
+		<form class="form-horizontal" method="post">
+			
+				<div class="col-lg-12 well">
+				
+					<legend>Votre identité</legend>
+
+					<div class="col-lg-10" style="margin-bottom: 20px">
+						<p style="font-size: 13px">Veuillez entrer ci-dessous vos
+							informations personnelles.</p>
+					</div>
+
+
+					<div class="col-lg-6">
+
+						<div class="form-group">
+							<label class="col-lg-2 control-label">Nom* </label>
+							<div class="col-lg-8">
+								<input type="text" class="form-control" name="name" value="{{name}}" required>
+							</div>
+						</div>
+
+						<div class="form-group">
+							<label class="col-lg-2 control-label">Prénom* </label>
+							<div class="col-lg-8">
+								<input type="text" class="form-control" name="firstname" value="{{firstname}}" required>
+							</div>
+						</div>
+
+						<div class="form-group">
+							<label class="col-lg-2 control-label">Téléphone </label>
+							<div class="col-lg-8">
+								<input type="text" class="form-control" name="telephone"
+									value="{{telephone}}">
+							</div>
+						</div>
+
+						<div class="form-group">
+							<label class="col-lg-2 control-label">GSM</label>
+							<div class="col-lg-8">
+								<input type="text" class="form-control" name="gsm"
+									value="{{gsm}}">
+							</div>
+						</div>
+
+						<div class="form-group">
+							<label class="col-lg-2 control-label">E-mail* </label>
+							<div class="col-lg-8">
+								<input type="text" class="form-control" name="mail" value="{{mail}}" required> {{errors.mail}}
+							</div>
+						</div>
+
+						<div class="col-lg-6" style="margin-top: 20px;">
+							<p style="font-size: 12px">* = champs
+								obligatoires</p>
+						</div>
+
+
+
+					</div>
+
+					<div class="col-lg-6">
+
+						<div class="form-group">
+							<label class="col-lg-2 control-label">Rue </label>
+							<div class="col-lg-8">
+								<input type="text" class="form-control" name="street"
+									value="{{street}}">
+							</div>
+						</div>
+
+						<div class="form-group">
+							<label class="col-lg-2 control-label">Numéro </label>
+							<div class="col-lg-2">
+								<input type="text" class="form-control" name="streetNb"
+									value="{{streetNb}}">
+							</div>
+
+
+							<label class="col-lg-3 control-label">Code postal </label>
+							<div class="col-lg-3">
+								<input type="text" class="form-control" name="postCode"
+									value="{{postCode}}">
+							</div>
+						</div>
+
+						<div class="form-group">
+							<label class="col-lg-2 control-label">Localité </label>
+							<div class="col-lg-8">
+								<input type="text" class="form-control" name="city"
+									value="{{city}}">
+							</div>
+						</div>
+
+					</div>
+				</div>
+			<!-- Votre profil -->
+
+			<div class="col-lg-12 well">
+					<legend>Votre profil</legend>
+
+					<div class="col-lg-10" style="margin-bottom: 20px">
+						<p style="font-size: 13px">Veuillez choisir ci-dessous les
+							informations grâce auxquelles vous pourrez vous connecter à
+							l'application.</p>
+					</div>
+
+
+					<div class="col-lg-7">
+
+						<div class="form-group">
+							<label class="col-lg-5 control-label">Choisissez un
+								login* </label>
+							<div class="col-lg-6">
+								<input type="text" class="form-control" name="login" value="{{login}}" required> {{errors.login}}
+							</div>
+						</div>
+
+						<div class="form-group">
+							<label class="col-lg-5 control-label">Choisissez un mot
+								de passe* </label>
+							<div class="col-lg-6">
+								<input type="password" class="form-control" name="password" value="{{password}}" required> {{errors.password}}
+							</div>
+						</div>
+
+						<div class="form-group">
+							<label class="col-lg-5 control-label">Confirmez votre mot
+								de passe* </label>
+							<div class="col-lg-6">
+								<input type="password" class="form-control" name="verify" value="" required> {{errors.verify}}
+							</div>
+						</div>
+
+						<div class="col-lg-6"
+							style="margin-top: 20px; margin-bottom: 20px; float: right">
+							<p class="pull-right" style="font-size: 12px">* = champs
+								obligatoires</p>
+						</div>
+
+					</div>
+
+
+					<div class="form-group" style="margin-top: 25px">
+						<div class="col-lg-10 col-lg-offset-5">
+							<button type="submit" class="btn btn-primary"
+								style="padding-left: 50px; padding-right: 50px; margin-bottom: 35px">Créer
+								mon profil</button>
+						</div>
+					</div>
+				</div>
+		</form>
+
+
+</body>
+
+</html>
